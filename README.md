@@ -1,2 +1,2 @@
-# driving-wheel
-Simple drawing wheel widget
+# steering-wheel
+Simple steering wheel widget

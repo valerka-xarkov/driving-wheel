@@ -1,12 +1,17 @@
 const gulp = require('gulp');
 const ts = require('gulp-typescript');
 const tsProject = ts.createProject('tsconfig.json');
-const merge = require('merge2');  // Requires separate installation
+var clean = require('gulp-clean');
 
 const paths = {
   pages: ['src/*.html']
 };
+const jsDest = './build/lib';
 const dest = './build';
+gulp.task('clean', function () {
+  return gulp.src(dest, { force: true })
+    .pipe(clean());
+});
 
 gulp.task('copy-html', function () {
   return gulp.src(paths.pages)
@@ -14,13 +19,9 @@ gulp.task('copy-html', function () {
 });
 
 gulp.task('scripts', function () {
-  const tsResult = tsProject.src()
-    .pipe(tsProject());
-
-  return merge([
-    tsResult.dts.pipe(gulp.dest(dest)),
-    tsResult.js.pipe(gulp.dest(dest))
-  ]);
+  return tsProject.src()
+    .pipe(tsProject())
+    .pipe(gulp.dest(jsDest));
 });
 
 gulp.task('watch', function () {
@@ -28,4 +29,4 @@ gulp.task('watch', function () {
   gulp.watch('src/index.html', gulp.series('copy-html'));
 });
 
-gulp.task('default', gulp.parallel('copy-html', 'scripts', 'watch'));
+gulp.task('default', gulp.series('clean', 'copy-html', 'scripts', 'watch'));

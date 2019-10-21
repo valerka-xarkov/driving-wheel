@@ -1,21 +1,27 @@
 {
-  "name": "driving-wheel",
-  "version": "0.1.0",
-  "description": "Simple driving wheel widget",
-  "main": "build/driving-wheel.js",
+  "name": "simple-steering-wheel",
+  "version": "0.1.4",
+  "description": "Simple steering wheel widget",
+  "main": "./build/lib/driving-wheel.js",
+  "typings": "./build/lib/driving-wheel.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "gulp"
   },
+  "files": [
+    "build/lib/*.js",
+    "build/lib/*.d.ts"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^6.4.0",
     "gulp": "^4.0.2",
+    "gulp-clean": "^0.4.0",
     "gulp-typescript": "^5.0.1",
-    "merge2": "^1.3.0",
     "tslint": "^5.20.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "webpack-cli": "^3.3.9"
   },
   "dependencies": {}
 }
