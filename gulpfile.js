@@ -25,7 +25,7 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('watch', function () {
-  gulp.watch('src/ts/*.ts', gulp.series('scripts'));
+  gulp.watch('src/lib/*.ts', gulp.series('scripts'));
   gulp.watch('src/index.html', gulp.series('copy-html'));
 });
 

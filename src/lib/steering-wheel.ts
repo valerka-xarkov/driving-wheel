@@ -1,28 +1,23 @@
-import { DoubleTap } from './double-touch-click.js';
-
 const oneDegreeAnimTime = 100 / 60;
 
 export const DrivingWheelTurnEventName = 'input';
 
-export class DrivingWheel extends HTMLElement {
-  static readonly observedAttributes = ['value', 'min-angle', 'max-angle', 'step', 'dbl-click-value'];
+export class SteeringWheel extends HTMLElement {
+  static readonly observedAttributes = ['value', 'min-angle', 'max-angle', 'step'];
   private wheel: HTMLElement;
   private interacting = false;
   private visibleAngle = 0;
   private curAngle = 0;
   private curStep = 1;
-  private curDblClickValue = 0;
   private userActionInitialAngle = 0;
 
   private minPossibleAngle = -Infinity;
   private maxPossibleAngle = Infinity;
   private touchIdentifier: number;
-  private doubleTapInitializer: DoubleTap;
   constructor() {
     super();
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
-    this.onDblClick = this.onDblClick.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onTouchStart = this.onTouchStart.bind(this);
 
@@ -64,26 +59,16 @@ export class DrivingWheel extends HTMLElement {
     this.curStep = newStep;
   }
 
-  get dblClickValue(): number {
-    return this.curDblClickValue;
-  }
-
-  set dblClickValue(value: number) {
-    this.curDblClickValue = value;
-  }
-
   connectedCallback() {
     for (const prop of ['minAngle', 'maxAngle', 'value', 'step']) {
       this.upgradeProperty(prop);
     }
     this.initEvents();
-    this.doubleTapInitializer = new DoubleTap(this.wheel);
   }
 
   disconnectedCallback() {
     this.removeEvents();
     this.onMouseUp();
-    this.doubleTapInitializer.destroy();
   }
 
   attributeChangedCallback(attrName: string, oldValue: string, newValue: string): void {
@@ -98,9 +83,6 @@ export class DrivingWheel extends HTMLElement {
       case 'step':
         const parsed = Number(newValue);
         this.step = Number.isFinite(parsed) && parsed > 0 ? Number(newValue) : this.step;
-        return;
-      case 'dbl-click-value':
-        this.dblClickValue = Number.isFinite(Number(newValue)) ? Number(newValue) : this.dblClickValue;
         return;
     }
 
@@ -123,21 +105,11 @@ export class DrivingWheel extends HTMLElement {
   private initEvents() {
     this.wheel.addEventListener('mousedown', this.onMouseDown);
     this.wheel.addEventListener('touchstart', this.onTouchStart);
-    this.wheel.addEventListener('dblclick', this.onDblClick);
-    this.wheel.addEventListener('dbltap', this.onDblClick);
   }
 
   private removeEvents() {
     this.wheel.removeEventListener('mousedown', this.onMouseDown);
     this.wheel.removeEventListener('touchstart', this.onTouchStart);
-    this.wheel.removeEventListener('dblclick', this.onDblClick);
-    this.wheel.removeEventListener('dbltap', this.onDblClick);
-  }
-
-  private onDblClick() {
-    this.removeDynamicEventListeners();
-    this.interacting = false;
-    this.moveSlowlyTo(this.dblClickValue, true);
   }
 
   private moveSlowlyTo(newAngle: number, dispatchEvent = false) {
@@ -231,4 +203,4 @@ export class DrivingWheel extends HTMLElement {
   }
 }
 
-customElements.define('driving-wheel', DrivingWheel);
+customElements.define('steering-wheel', SteeringWheel);

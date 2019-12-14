@@ -9,7 +9,7 @@
         content="ie=edge">
   <title>Document</title>
   <style>
-    driving-wheel {
+    steering-wheel {
       display: block;
       width: 500px;
       height: 500px;
@@ -51,11 +51,11 @@
 </head>
 
 <body>
-  <driving-wheel value="0"
-                 min-angle="-100"
-                 max-angle="100"
-                 step="10"
-                 dbl-click-value="-10">
+  <steering-wheel value="0"
+                  min-angle="-100"
+                  max-angle="100"
+                  step="10"
+                  dbl-click-value="-10">
     <svg height="500"
          width="500"
          viewBox="0 0 32 32">
@@ -64,24 +64,24 @@
       S17.105,18,16,18z M4,16c5.465,0,9.891,5.266,9.984,11.797C8.328,26.828,4,21.926,4,16z M18.016,27.797
       C18.109,21.266,22.535,16,28,16C28,21.926,23.672,26.828,18.016,27.797z" />
     </svg>
-  </driving-wheel>
+  </steering-wheel>
   <span id="wheel-angle"></span>
 
-  <driving-wheel id="wheel2"
-                 value="0"
-                 step="0.01"
-                 dbl-click-value="0">
+  <steering-wheel id="wheel2"
+                  value="0"
+                  step="0.01"
+                  dbl-click-value="0">
     <div class="arrow-wheel-placeholder">
       <div class="arrow-wheel"></div>
     </div>
-  </driving-wheel>
+  </steering-wheel>
   <div id="wheel-angle2"></div>
   <script type="module">
-    import { DrivingWheelTurnEventName } from './lib/driving-wheel.js';
+    import { DrivingWheelTurnEventName } from './lib/steering-wheel.js';
     debugger;
-    const wheel = document.querySelector('driving-wheel');
+    const wheel = document.querySelector('steering-wheel');
     const whileAngle = document.getElementById('wheel-angle');
-    const wheel2 = document.querySelector('driving-wheel#wheel2');
+    const wheel2 = document.querySelector('steering-wheel#wheel2');
     const whileAngle2 = document.getElementById('wheel-angle2');
 
     function handler() {
