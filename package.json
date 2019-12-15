@@ -1,9 +1,9 @@
 {
   "name": "simple-steering-wheel",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Simple steering wheel widget",
-  "main": "./build/lib/driving-wheel.js",
-  "typings": "./build/lib/driving-wheel.d.ts",
+  "main": "./build/lib/steering-wheel.js",
+  "typings": "./build/lib/steering-wheel.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "gulp"
