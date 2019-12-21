@@ -1,6 +1,6 @@
 {
   "name": "simple-steering-wheel",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Simple steering wheel widget",
   "main": "./build/lib/steering-wheel.js",
   "typings": "./build/lib/steering-wheel.d.ts",
@@ -12,6 +12,11 @@
     "build/lib/*.js",
     "build/lib/*.d.ts"
   ],
+  "homepage": "https://github.com/valerka-xarkov/driving-wheel/blob/master/README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valerka-xarkov/driving-wheel"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -20,8 +25,7 @@
     "gulp-clean": "^0.4.0",
     "gulp-typescript": "^5.0.1",
     "tslint": "^5.20.0",
-    "typescript": "^3.6.3",
-    "webpack-cli": "^3.3.9"
+    "typescript": "^3.7.3"
   },
   "dependencies": {}
 }
