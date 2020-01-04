@@ -1,6 +1,6 @@
 {
   "name": "simple-steering-wheel",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Simple steering wheel widget",
   "main": "./build/lib/steering-wheel.js",
   "typings": "./build/lib/steering-wheel.d.ts",

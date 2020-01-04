@@ -207,7 +207,7 @@ export class SteeringWheel extends HTMLElement {
     if (Number.isFinite(this.endActionValue)) {
       this.moveSlowlyTo(this.endActionValue);
     } else {
-      this.moveSlowlyTo(this.curAngle);
+      this.moveSlowlyTo(this.curAngle, true);
     }
     this.interacting = false;
   }
