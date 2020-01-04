@@ -182,7 +182,7 @@ export class SteeringWheel extends HTMLElement {
   }
 
   private setCurAngle(newAngle: number, dispatchEvent = false) {
-    let angle = Math.max(Math.min(this.maxAngle, newAngle), this.minAngle);
+    const angle = Math.max(Math.min(this.maxAngle, newAngle), this.minAngle);
 
     const newCurAngle = Math.round(angle / this.step) * this.step;
     this.visibleAngle = dispatchEvent ? angle : newCurAngle;
@@ -196,18 +196,20 @@ export class SteeringWheel extends HTMLElement {
   private getAngle(event: MouseEvent | Touch): number {
     const rect = this.getBoundingClientRect();
     if (this.direction === Direction.Horizontal) {
-      return (event.clientX - (rect.left + rect.width * 0.1)) / (rect.width * 0.8) * (this.maxAngle - this.minAngle) + this.minAngle;
+      return (event.clientX - (rect.left + rect.width * 0.1))
+        / (rect.width * 0.8) * (this.maxAngle - this.minAngle) + this.minAngle;
     } else {
-      return (event.clientY - (rect.top + rect.height * 0.1)) / (rect.height * 0.8) * (this.minAngle - this.maxAngle) - this.minAngle;
+      return (event.clientY - (rect.top + rect.height * 0.1))
+        / (rect.height * 0.8) * (this.minAngle - this.maxAngle) - this.minAngle;
     }
   }
 
   private onMouseUp() {
     this.removeDynamicEventListeners();
     if (Number.isFinite(this.endActionValue)) {
-      this.moveSlowlyTo(this.endActionValue);
+      this.moveSlowlyTo(this.endActionValue, true);
     } else {
-      this.moveSlowlyTo(this.curAngle, true);
+      this.moveSlowlyTo(this.curAngle);
     }
     this.interacting = false;
   }
