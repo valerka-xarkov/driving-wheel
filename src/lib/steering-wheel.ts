@@ -101,14 +101,18 @@ export class SteeringWheel extends HTMLElement {
           this.setCurAngle(Number(newValue));
         }
         return;
-      case 'min-angle': this.minAngle = Number.isFinite(Number(newValue)) ? Number(newValue) : defaultMinAngle; return;
-      case 'max-angle': this.maxAngle = Number.isFinite(Number(newValue)) ? Number(newValue) : defaultMaxAngle; return;
+      case 'min-angle':
+        this.minAngle = Number.isFinite(Number(newValue)) ? Number(newValue) : defaultMinAngle;
+        return;
+      case 'max-angle':
+        this.maxAngle = Number.isFinite(Number(newValue)) ? Number(newValue) : defaultMaxAngle;
+        return;
       case 'step':
         const parsed = Number(newValue);
         this.step = Number.isFinite(parsed) && parsed > 0 ? Number(newValue) : this.step;
         return;
       case 'direction':
-        this.direction = <Direction>newValue;
+        this.direction = newValue as Direction;
         return;
       case 'end-action-value':
         this.endActionValue = Number(newValue);
@@ -145,7 +149,7 @@ export class SteeringWheel extends HTMLElement {
     const time = Math.abs(this.curAngle - newAngle) * oneDegreeAnimTime;
     this.wheel.style.transition = `transform ${time / 1000}s ease-out 0s`;
     this.setCurAngle(newAngle, dispatchEvent);
-    setTimeout(() => this.wheel.style.transition = null, time + 50);
+    setTimeout(() => (this.wheel.style.transition = null), time + 50);
   }
 
   private onMouseDown(event: MouseEvent) {
@@ -170,7 +174,7 @@ export class SteeringWheel extends HTMLElement {
   private onMouseMove(event: MouseEvent | TouchEvent) {
     let eventData: MouseEvent | Touch = null;
     if (event instanceof TouchEvent) {
-      eventData = Array.prototype.find.call(event.changedTouches, (t) => t.identifier === this.touchIdentifier);
+      eventData = Array.prototype.find.call(event.changedTouches, t => t.identifier === this.touchIdentifier);
       if (!eventData) {
         return;
       }
@@ -196,15 +200,25 @@ export class SteeringWheel extends HTMLElement {
   private getAngle(event: MouseEvent | Touch): number {
     const rect = this.getBoundingClientRect();
     if (this.direction === Direction.Horizontal) {
-      return (event.clientX - (rect.left + rect.width * 0.1))
-        / (rect.width * 0.8) * (this.maxAngle - this.minAngle) + this.minAngle;
+      return (
+        ((event.clientX - (rect.left + rect.width * 0.1)) / (rect.width * 0.8)) * (this.maxAngle - this.minAngle) +
+        this.minAngle
+      );
     } else {
-      return (event.clientY - (rect.top + rect.height * 0.1))
-        / (rect.height * 0.8) * (this.minAngle - this.maxAngle) - this.minAngle;
+      return (
+        ((event.clientY - (rect.top + rect.height * 0.1)) / (rect.height * 0.8)) * (this.minAngle - this.maxAngle) -
+        this.minAngle
+      );
     }
   }
 
-  private onMouseUp() {
+  private onMouseUp(event: MouseEvent | TouchEvent = null) {
+    if (event && event instanceof TouchEvent) {
+      const eventData = Array.prototype.find.call(event.changedTouches, t => t.identifier === this.touchIdentifier);
+      if (!eventData) {
+        return;
+      }
+    }
     this.removeDynamicEventListeners();
     if (Number.isFinite(this.endActionValue)) {
       this.moveSlowlyTo(this.endActionValue, true);

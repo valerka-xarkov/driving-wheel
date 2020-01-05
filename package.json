@@ -1,6 +1,6 @@
 {
   "name": "simple-steering-wheel",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Simple steering wheel widget",
   "main": "./build/lib/steering-wheel.js",
   "typings": "./build/lib/steering-wheel.d.ts",
@@ -29,5 +29,11 @@
   },
   "dependencies": {
     "http-server": "^0.12.0"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 120
   }
 }
