@@ -1,12 +1,13 @@
 {
   "name": "simple-steering-wheel",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Simple steering wheel widget",
   "main": "./build/lib/steering-wheel.js",
   "typings": "./build/lib/steering-wheel.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "gulp"
+    "start": "gulp",
+    "server": "http-server ./build"
   },
   "files": [
     "build/lib/*.js",
@@ -25,11 +26,10 @@
     "gulp-clean": "^0.4.0",
     "gulp-typescript": "^5.0.1",
     "tslint": "^5.20.0",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.3",
+    "http-server": "^0.12.1"
   },
-  "dependencies": {
-    "http-server": "^0.12.0"
-  },
+  "dependencies": {},
   "prettier": {
     "tabWidth": 2,
     "semi": true,

@@ -1,120 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      steering-wheel {
+        display: block;
+        width: 500px;
+        height: 500px;
+        overflow: hidden;
+      }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <style>
-    steering-wheel {
-      display: block;
-      width: 500px;
-      height: 500px;
-      overflow: hidden;
-    }
+      path {
+        fill: #f525e8;
+        fill: pink;
+        transform-origin: 50% 50%;
+      }
 
-    path {
-      fill: #F525E8;
-      fill: pink;
-      transform-origin: 50% 50%;
-    }
+      .arrow-wheel-placeholder {
+        --arrow-wheel-size: 500px;
+        height: var(--arrow-wheel-size);
+        width: var(--arrow-wheel-size);
+        border-radius: 50%;
+        border: 1px solid black;
+        position: relative;
+      }
 
+      .arrow-wheel {
+        --arrow-width: 100px;
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 50px solid transparent;
+        border-right: 50px solid transparent;
+        border-bottom: var(--arrow-width) solid red;
+        left: 50%;
+        margin-left: calc(var(--arrow-width) / (-2));
+      }
 
-    .arrow-wheel-placeholder {
-      --arrow-wheel-size: 500px;
-      height: var(--arrow-wheel-size);
-      width: var(--arrow-wheel-size);
-      border-radius: 50%;
-      border: 1px solid black;
-      position: relative;
-    }
+      .arrow-wheel-v-placeholder {
+        --arrow-wheel-size: 500px;
+        height: var(--arrow-wheel-size);
+        width: var(--arrow-wheel-size);
+        border-radius: 50%;
+        border: 1px solid black;
+        position: relative;
+      }
 
-    .arrow-wheel {
-      --arrow-width: 100px;
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-left: 50px solid transparent;
-      border-right: 50px solid transparent;
-      border-bottom: var(--arrow-width) solid red;
-      left: 50%;
-      margin-left: calc(var(--arrow-width) / (-2));
-    }
+      .arrow-wheel-v {
+        --arrow-width: 100px;
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 50px solid transparent;
+        border-bottom: 50px solid transparent;
+        border-right: var(--arrow-width) solid red;
+        left: 0;
+        top: 50%;
+        margin-top: calc(var(--arrow-width) / (-2));
+      }
 
-    .arrow-wheel-v-placeholder {
-      --arrow-wheel-size: 500px;
-      height: var(--arrow-wheel-size);
-      width: var(--arrow-wheel-size);
-      border-radius: 50%;
-      border: 1px solid black;
-      position: relative;
-    }
+      #wheel-angle3 {
+        margin-bottom: 100px;
+      }
 
-    .arrow-wheel-v {
-      --arrow-width: 100px;
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-top: 50px solid transparent;
-      border-bottom: 50px solid transparent;
-      border-right: var(--arrow-width) solid red;
-      left: 0;
-      top: 50%;
-      margin-top: calc(var(--arrow-width) / (-2));
-    }
+      .touched {
+        background-color: #ffdde2;
+      }
+    </style>
+  </head>
 
-    #wheel-angle3 {
-      margin-bottom: 100px;
-    }
-  </style>
-</head>
-
-<body>
-  <steering-wheel value="0" min-angle="-100" max-angle="100" step="10">
-    <svg height="500" width="500" viewBox="0 0 32 32">
-      <path d="M16,0C7.164,0,0,7.164,0,16s7.164,16,16,16s16-7.164,16-16S24.836,0,16,0z M16,4
+  <body>
+    <steering-wheel value="0" min-angle="-100" max-angle="100" step="10">
+      <svg height="500" width="500" viewBox="0 0 32 32">
+        <path
+          d="M16,0C7.164,0,0,7.164,0,16s7.164,16,16,16s16-7.164,16-16S24.836,0,16,0z M16,4
       c5.207,0,9.605,3.354,11.266,8H4.734C6.395,7.354,10.793,4,16,4z M16,18c-1.105,0-2-0.895-2-2s0.895-2,2-2s2,0.895,2,2
       S17.105,18,16,18z M4,16c5.465,0,9.891,5.266,9.984,11.797C8.328,26.828,4,21.926,4,16z M18.016,27.797
-      C18.109,21.266,22.535,16,28,16C28,21.926,23.672,26.828,18.016,27.797z" />
-    </svg>
-  </steering-wheel>
-  <span id="wheel-angle"></span>
+      C18.109,21.266,22.535,16,28,16C28,21.926,23.672,26.828,18.016,27.797z"
+        />
+      </svg>
+    </steering-wheel>
+    <span id="wheel-angle"></span>
 
-  <steering-wheel id="wheel2" value="0" step="0.01">
-    <div class="arrow-wheel-placeholder">
-      <div class="arrow-wheel"></div>
-    </div>
-  </steering-wheel>
-  <div id="wheel-angle2"></div>
+    <steering-wheel id="wheel2" value="0" step="0.01">
+      <div class="arrow-wheel-placeholder">
+        <div class="arrow-wheel"></div>
+      </div>
+    </steering-wheel>
+    <div id="wheel-angle2"></div>
 
-  <steering-wheel id="wheel3" value="0" step="0.01" direction="v" end-action-value="0">
-    <div class="arrow-wheel-v-placeholder">
-      <div class="arrow-wheel-v"></div>
-    </div>
-  </steering-wheel>
-  <div id="wheel-angle3"></div>
-  <script type="module">
-    import { DrivingWheelTurnEventName } from './lib/steering-wheel.js';
-    const wheel = document.querySelector('steering-wheel');
-    const whileAngle = document.getElementById('wheel-angle');
-    const wheel2 = document.querySelector('steering-wheel#wheel2');
-    const whileAngle2 = document.getElementById('wheel-angle2');
-    const wheel3 = document.querySelector('steering-wheel#wheel3');
-    const whileAngle3 = document.getElementById('wheel-angle3');
+    <steering-wheel id="wheel3" value="0" step="0.01" direction="v" end-action-value="0">
+      <div class="arrow-wheel-v-placeholder">
+        <div class="arrow-wheel-v"></div>
+      </div>
+    </steering-wheel>
+    <div id="wheel-angle3"></div>
+    <script type="module">
+      import { DrivingWheelTurn, DrivingWheelTurnStart, DrivingWheelTurnEnd } from './lib/steering-wheel.js';
+      const wheel = document.querySelector('steering-wheel');
+      const whileAngle = document.getElementById('wheel-angle');
+      const wheel2 = document.querySelector('steering-wheel#wheel2');
+      const whileAngle2 = document.getElementById('wheel-angle2');
+      const wheel3 = document.querySelector('steering-wheel#wheel3');
+      const whileAngle3 = document.getElementById('wheel-angle3');
 
-    function handler() {
-      whileAngle.innerText = wheel.value.toString();
-    }
+      function handler() {
+        whileAngle.innerText = wheel.value.toString();
+      }
 
-    wheel.addEventListener(DrivingWheelTurnEventName, handler);
-    wheel2.addEventListener(DrivingWheelTurnEventName, () => {
-      whileAngle2.innerText = wheel2.value.toString();
-    });
-    wheel3.addEventListener(DrivingWheelTurnEventName, () => {
-      whileAngle3.innerText = wheel3.value.toString();
-    });
-  </script>
-</body>
-
+      wheel.addEventListener(DrivingWheelTurn, handler);
+      wheel2.addEventListener(DrivingWheelTurn, () => {
+        whileAngle2.innerText = wheel2.value.toString();
+      });
+      wheel3.addEventListener(DrivingWheelTurn, () => {
+        whileAngle3.innerText = wheel3.value.toString();
+      });
+      wheel3.addEventListener(DrivingWheelTurnStart, () => {
+        whileAngle3.innerText = `turn start ${wheel3.value}`;
+        wheel3.classList.add('touched');
+      });
+      wheel3.addEventListener(DrivingWheelTurnEnd, () => {
+        whileAngle3.innerText = `turn end ${wheel3.value.toString()}`;
+        wheel3.classList.remove('touched');
+      });
+    </script>
+  </body>
 </html>

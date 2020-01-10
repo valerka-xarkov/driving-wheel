@@ -1,6 +1,8 @@
 const oneDegreeAnimTime = 100 / 60;
 
-export const DrivingWheelTurnEventName = 'input';
+export const DrivingWheelTurn = 'input';
+export const DrivingWheelTurnStart = 'turn-start';
+export const DrivingWheelTurnEnd = 'turn-end';
 const defaultMaxAngle = 90;
 const defaultMinAngle = -90;
 
@@ -152,10 +154,14 @@ export class SteeringWheel extends HTMLElement {
     setTimeout(() => (this.wheel.style.transition = null), time + 50);
   }
 
+  private turnStart() {
+    this.dispatchEvent(new Event(DrivingWheelTurnStart));
+  }
   private onMouseDown(event: MouseEvent) {
     if (!this.interacting) {
       document.addEventListener('mousemove', this.onMouseMove);
       document.addEventListener('mouseup', this.onMouseUp);
+      this.turnStart();
     }
     this.interacting = true;
   }
@@ -167,6 +173,7 @@ export class SteeringWheel extends HTMLElement {
       document.addEventListener('touchmove', this.onMouseMove);
       document.addEventListener('touchend', this.onMouseUp);
       event.preventDefault();
+      this.turnStart();
     }
     this.interacting = true;
   }
@@ -193,7 +200,7 @@ export class SteeringWheel extends HTMLElement {
     this.wheel.style.transform = `rotate(${this.visibleAngle}deg)`;
     if (dispatchEvent && newCurAngle !== this.curAngle) {
       this.curAngle = newCurAngle;
-      this.dispatchEvent(new Event(DrivingWheelTurnEventName));
+      this.dispatchEvent(new Event(DrivingWheelTurn));
     }
   }
 
@@ -213,6 +220,9 @@ export class SteeringWheel extends HTMLElement {
   }
 
   private onMouseUp(event: MouseEvent | TouchEvent = null) {
+    if (this.interacting === false) {
+      return;
+    }
     if (event && event instanceof TouchEvent) {
       const eventData = Array.prototype.find.call(event.changedTouches, t => t.identifier === this.touchIdentifier);
       if (!eventData) {
@@ -225,6 +235,7 @@ export class SteeringWheel extends HTMLElement {
     } else {
       this.moveSlowlyTo(this.curAngle);
     }
+    this.dispatchEvent(new Event(DrivingWheelTurnEnd));
     this.interacting = false;
   }
 
