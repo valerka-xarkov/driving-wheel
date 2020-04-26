@@ -129,9 +129,22 @@ export class AreaSelector extends HTMLElement {
   }
   pointFromZeroPercents(): IPoint {
     return {
-      x: ((this.curPosition.left - this.width / 2) / (this.width - this.pointerSize)) * 2,
-      y: (-(this.curPosition.top - this.height / 2) / (this.height - this.pointerSize)) * 2,
+      x: this.getPercentFromZero(this.width, this.curPosition.left, this.pointerSize, this.zeroX),
+      y: this.getPercentFromZero(
+        this.height,
+        this.height - this.curPosition.top,
+        this.pointerSize,
+        this.height - this.zeroY
+      ),
     };
+  }
+
+  private getPercentFromZero(size: number, position: number, pointerSize: number, zeroPosition: number): number {
+    if (position >= zeroPosition) {
+      return (position - zeroPosition) / (size - zeroPosition - pointerSize / 2);
+    } else {
+      return (position - zeroPosition) / (zeroPosition - pointerSize / 2);
+    }
   }
 
   private upgradeProperty(prop: string) {

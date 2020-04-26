@@ -108,6 +108,17 @@
       zero-y="150"
     ></area-selector>
     <div id="area-selector-value1"></div>
+
+    <area-selector
+      id="area-selector-2"
+      height="300"
+      width="100"
+      pointer-size="100"
+      reset-when-stop="false"
+      zero-x="50"
+      zero-y="250"
+    ></area-selector>
+    <div id="area-selector-value2"></div>
     <script type="module">
       import { DrivingWheelTurn, DrivingWheelTurnStart, DrivingWheelTurnEnd } from './lib/steering-wheel.js';
       import { AreaSelector } from './lib/area-selector.js';
@@ -120,6 +131,8 @@
       const whileAngle3 = document.getElementById('wheel-angle3');
       const area1 = document.querySelector('area-selector');
       const areaValue1 = document.getElementById('area-selector-value1');
+      const area2 = document.querySelector('area-selector#area-selector-2');
+      const areaValue2 = document.getElementById('area-selector-value2');
 
       function handler() {
         whileAngle.innerText = wheel.value.toString();
@@ -142,6 +155,9 @@
       });
       area1.addEventListener('changed', () => {
         areaValue1.innerText = `${area1.pointFromZeroPercents().x}, ${area1.pointFromZeroPercents().y}`;
+      });
+      area2.addEventListener('changed', () => {
+        areaValue2.innerText = `${area2.pointFromZeroPercents().x}, ${area2.pointFromZeroPercents().y}`;
       });
     </script>
   </body>
