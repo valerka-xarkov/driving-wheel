@@ -250,7 +250,13 @@ export class AreaSelector extends HTMLElement {
     this.setPointerPosition(x, y);
     setTimeout(() => (this.pointer.style.transition = null), 60);
   }
-  private mouseUpHandler() {
+  private mouseUpHandler(event: MouseEvent | TouchEvent) {
+    if (event instanceof TouchEvent) {
+      const touch = event.changedTouches[0];
+      if (this.touchIdentifier !== touch.identifier) {
+        return;
+      }
+    }
     if (this.interacting) {
       if (this.resetWhenStop) {
         this.moveSlowlyTo(this.zeroX, this.zeroY);
